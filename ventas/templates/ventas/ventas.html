@@ -1,0 +1,22 @@
+<h1>Ventas - Ecommerce</h1>
+
+<h2>Productos</h2>
+<ul>
+  {% for p in productos %}
+    <li>
+      {{ p.title }} - ${{ p.price }}
+      <a href="{% url 'agregar_carrito' p.id %}">Agregar</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<h2>Carrito</h2>
+<ul>
+  {% for c in carrito %}
+    <li>ID producto: {{ c }}</li>
+  {% empty %}
+    <li>Carrito vacío</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'procesar_pedido' %}">Procesar pedido</a>
