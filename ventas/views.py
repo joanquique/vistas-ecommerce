@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
+from django.views import View
 
 PRODUCTOS = [
     {"id": 1, "title": "Laptop Gamer", "price": 1500},
@@ -23,3 +25,17 @@ def agregar_carrito(request, product_id):
 def procesar_pedido(request):
     request.session["carrito"] = []
     return HttpResponse("✅ Pedido procesado correctamente")
+
+class SalesDataView(View):
+    def get(self, request, *args, **kwargs):
+        # Datos demo
+        labels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
+        values = [5, 8, 3, 10, 7, 12, 6]
+
+        return JsonResponse({
+            "labels": labels,
+            "values": values
+        })
+        
+def ventas_chart(request):
+    return render(request, "ventas/ventas_chart.html")

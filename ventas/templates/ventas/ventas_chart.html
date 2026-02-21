@@ -1,0 +1,28 @@
+<h1>Gráfica de Ventas</h1>
+
+<canvas id="ventasChart" width="400" height="200"></canvas>
+
+<!-- Chart.js por CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  async function cargarVentas() {
+    const res = await fetch("{% url 'ventas_data' %}");
+    const data = await res.json();
+
+    const ctx = document.getElementById("ventasChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: "Ventas",
+          data: data.values
+        }]
+      }
+    });
+  }
+
+  cargarVentas();
+</script>
