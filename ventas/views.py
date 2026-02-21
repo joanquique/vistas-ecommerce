@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views import View
+from django.shortcuts import render, redirect
+from .forms import UserRegisterForm
 
 PRODUCTOS = [
     {"id": 1, "title": "Laptop Gamer", "price": 1500},
@@ -39,3 +41,14 @@ class SalesDataView(View):
         
 def ventas_chart(request):
     return render(request, "ventas/ventas_chart.html")
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")  # o a tu home
+    else:
+        form = UserRegisterForm()
+
+    return render(request, "ventas/register.html", {"form": form})
